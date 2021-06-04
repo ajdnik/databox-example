@@ -1,0 +1,10 @@
+version: '3'
+services:
+   databox:
+     user: "1000:50"
+     container_name: databox
+     environment:
+       - TIMEOUT=5000
+     env_file:
+       - .env
+     image: databox-example 

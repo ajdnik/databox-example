@@ -1,0 +1,48 @@
+{
+  "name": "databox-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -r ts-node/register 'tests/**/*.test.ts'",
+    "coverage": "nyc -e .ts -x 'tests/**/*' -x 'dist/**/*' --all npm run test",
+    "start:local": "ts-node src/index.ts",
+    "build:typescript": "tsc --build",
+    "build:docker": "docker build -t databox-example .",
+    "build": "npm run build:typescript && npm run build:docker",
+    "start": "docker compose up"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajdnik/databox-example.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ajdnik/databox-example/issues"
+  },
+  "homepage": "https://github.com/ajdnik/databox-example#readme",
+  "dependencies": {
+    "@octokit/rest": "^18.5.6",
+    "databox": "^2.0.1",
+    "instagram-web-api": "^2.2.2",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.18",
+    "@types/chai-as-promised": "^7.1.4",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^15.6.2",
+    "@types/sinon": "^10.0.2",
+    "@types/sinon-chai": "^3.2.5",
+    "@types/winston": "^2.4.4",
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^8.4.0",
+    "nyc": "^15.1.0",
+    "sinon": "^11.1.1",
+    "sinon-chai": "^3.7.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.2"
+  }
+}
