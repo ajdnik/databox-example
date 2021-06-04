@@ -17,26 +17,30 @@ export class GitHubMetrics implements Collector {
    */
   private async collectCodeFrequency(username: string, repository: string): Promise<Databox.Metric[]> {
     const res = await this.container.github.getCodeFrequency(username, repository);
-    res.sort((a, b) => (a.week > b.week) ? -1 : 1);
+    res.sort((a, b) => (a.week > b.week ? -1 : 1));
     this.container.log.debug('Retrieved code frequency stats from GitHub service', { statsCount: res.length });
-    return res.splice(0, 10).reduce((metrics: Databox.Metric[], data: GitHub.CodeFrequency) => metrics.concat([
-      {
-        key: 'repository_additions',
-        value: data.additions,
-        date: new Date(data.week * 1000).toISOString(),
-        attributes: {
-          owner: data.username,
-        }
-      },
-      {
-        key: 'repository_deletions',
-        value: data.deletions,
-        date: new Date(data.week * 1000).toISOString(),
-        attributes: {
-          owner: data.username,
-        }
-      },
-    ]), []);
+    return res.splice(0, 10).reduce(
+      (metrics: Databox.Metric[], data: GitHub.CodeFrequency) =>
+        metrics.concat([
+          {
+            key: 'repository_additions',
+            value: data.additions,
+            date: new Date(data.week * 1000).toISOString(),
+            attributes: {
+              owner: data.username,
+            },
+          },
+          {
+            key: 'repository_deletions',
+            value: data.deletions,
+            date: new Date(data.week * 1000).toISOString(),
+            attributes: {
+              owner: data.username,
+            },
+          },
+        ]),
+      [],
+    );
   }
 
   /**
@@ -49,16 +53,19 @@ export class GitHubMetrics implements Collector {
    */
   private async collectCommitActivity(username: string, repository: string): Promise<Databox.Metric[]> {
     const res = await this.container.github.getCommitActivity(username, repository);
-    res.sort((a, b) => (a.week > b.week) ? -1 : 1);
+    res.sort((a, b) => (a.week > b.week ? -1 : 1));
     this.container.log.debug('Retrieved commit activity stats from GitHub service', { statsCount: res.length });
-    return res.splice(0, 10).map((data: GitHub.CommitActivity) => ({
-      key: 'repository_commits',
-      value: data.total,
-      date: new Date(data.week * 1000).toISOString(),
-      attributes: {
-        owner: data.username,
-      }
-    } as Databox.Metric));
+    return res.splice(0, 10).map(
+      (data: GitHub.CommitActivity) =>
+        ({
+          key: 'repository_commits',
+          value: data.total,
+          date: new Date(data.week * 1000).toISOString(),
+          attributes: {
+            owner: data.username,
+          },
+        } as Databox.Metric),
+    );
   }
 
   /**
@@ -77,7 +84,7 @@ export class GitHubMetrics implements Collector {
       value: repos.length,
       attributes: {
         owner: username,
-      }
+      },
     });
 
     const metricTasks = repos.reduce((tasks, repo) => {
@@ -88,7 +95,7 @@ export class GitHubMetrics implements Collector {
     const results = await Promise.all(metricTasks);
 
     // Combine metrics collected per repository into a commulative metric that is per user
-    const combined = results.reduce((acc: {[key: string]: Databox.Metric}, res: Databox.Metric[]) => {
+    const combined = results.reduce((acc: { [key: string]: Databox.Metric }, res: Databox.Metric[]) => {
       res.forEach((itm: Databox.Metric) => {
         const key = `${itm.key}_${itm.date}`;
         if (!acc.hasOwnProperty(key)) {

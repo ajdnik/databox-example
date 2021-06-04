@@ -86,7 +86,7 @@ export class InstagramAdapter implements Interface.Service {
    */
   getFollowers(username: string): Promise<number> {
     return this.whenAuthenticated(username, this.getFollowersByUsername.bind(this));
-  } 
+  }
 
   /**
    * Get the number of people an Instagram user is following.

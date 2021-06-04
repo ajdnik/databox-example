@@ -9,15 +9,13 @@ use(chaiAsPromised);
 use(sinonChai);
 
 describe('Periodic', () => {
-  let container: Container = {} as Container;
+  const container: Container = {} as Container;
   let periodic: Periodic;
   beforeEach(() => {
-    container.pipelines = [
-      {} as Pipeline,
-    ];
+    container.pipelines = [{} as Pipeline];
     container.executor = stub();
     container.timeout = {
-      wait: stub().onCall(2).throws(new Error('Break loop'))
+      wait: stub().onCall(2).throws(new Error('Break loop')),
     };
     periodic = new Periodic(container, 1234);
   });
@@ -42,22 +40,13 @@ describe('Periodic', () => {
   });
 
   it('should execute all pipelines', async () => {
-    container.pipelines = container.pipelines.concat([
-      {} as Pipeline,
-      {} as Pipeline,
-      {} as Pipeline
-    ]);
+    container.pipelines = container.pipelines.concat([{} as Pipeline, {} as Pipeline, {} as Pipeline]);
     await expect(periodic.execute()).to.be.rejectedWith('Break loop');
     expect(container.executor).to.have.callCount(12);
   });
 
   it('should throw error if any of the pipelines fails', async () => {
-    container.pipelines = container.pipelines.concat([
-      {} as Pipeline,
-      {} as Pipeline,
-      {} as Pipeline,
-      {} as Pipeline
-    ]);
+    container.pipelines = container.pipelines.concat([{} as Pipeline, {} as Pipeline, {} as Pipeline, {} as Pipeline]);
     (container.executor as any).onCall(12).throws(new Error('Executor test error'));
     await expect(periodic.execute()).to.be.rejectedWith('Executor test error');
     expect(container.executor).to.be.called;

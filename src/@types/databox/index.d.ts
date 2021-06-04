@@ -4,7 +4,7 @@ declare module 'databox' {
     insertAll(kpis: Databox.KPI[], callback: (res: Databox.Result) => void): void;
   }
   namespace Databox {
-      interface Config {
+    interface Config {
       push_token: string;
     }
 
@@ -12,7 +12,7 @@ declare module 'databox' {
       key: string;
       value: number;
       date?: string;
-      attributes?: {[key: string]: string};
+      attributes?: { [key: string]: string };
     }
 
     interface Error {

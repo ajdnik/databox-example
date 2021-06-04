@@ -2,6 +2,7 @@ export interface Application {
   execute(): Promise<void>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace GitHub {
   export interface Repository {
     name: string;
@@ -30,6 +31,7 @@ export namespace GitHub {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Instagram {
   export interface Service {
     getFollowers(username: string): Promise<number>;
@@ -38,18 +40,19 @@ export namespace Instagram {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Databox {
   export interface Metric {
     key: string;
     value: number;
     date?: string;
-    attributes?: {[key: string]: string};
+    attributes?: { [key: string]: string };
   }
 
   export interface PushResult {
     id: string;
     metrics: string[];
-  } 
+  }
 
   export interface Service {
     push(metrics: Metric[]): Promise<PushResult>;
@@ -73,7 +76,7 @@ export interface Pipeline {
 }
 
 export interface PipelineExecutor {
-  (container: Container, pipeline: Pipeline): Promise<void>
+  (container: Container, pipeline: Pipeline): Promise<void>;
 }
 
 export interface Timeout {
@@ -86,17 +89,17 @@ export interface Configuration {
   service: string;
   log: {
     filename: string;
-  },
+  };
   github: {
     username: string;
     token: string;
     databox: string;
-  }
+  };
   instagram: {
     username: string;
     password: string;
     databox: string;
-  }
+  };
 }
 
 export interface Container {

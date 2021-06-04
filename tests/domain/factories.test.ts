@@ -9,15 +9,13 @@ use(chaiAsPromised);
 use(sinonChai);
 
 describe('AppFactory', () => {
-  let container: Container = {} as Container;
+  const container: Container = {} as Container;
   beforeEach(() => {
     container.config = {} as Configuration;
-    container.pipelines = [
-      {} as Pipeline,
-    ];
+    container.pipelines = [{} as Pipeline];
     container.executor = stub();
     container.timeout = {
-      wait: stub().throws(new Error('Break loop'))
+      wait: stub().throws(new Error('Break loop')),
     };
   });
 

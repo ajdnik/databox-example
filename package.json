@@ -1,7 +1,7 @@
 {
   "name": "databox-example",
   "version": "1.0.0",
-  "description": "",
+  "description": "Example databox integration service",
   "main": "index.js",
   "scripts": {
     "test": "mocha -r ts-node/register 'tests/**/*.test.ts'",
@@ -10,13 +10,14 @@
     "build:typescript": "tsc --build",
     "build:docker": "docker build -t databox-example .",
     "build": "npm run build:typescript && npm run build:docker",
-    "start": "docker compose up"
+    "start": "docker compose up",
+    "lint": "eslint 'src/**/*.ts' 'tests/**/*.ts' --quiet --fix"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ajdnik/databox-example.git"
   },
-  "author": "",
+  "author": "Rok Ajdnik <r.ajdnik@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ajdnik/databox-example/issues"
@@ -36,13 +37,39 @@
     "@types/sinon": "^10.0.2",
     "@types/sinon-chai": "^3.2.5",
     "@types/winston": "^2.4.4",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
+    "eslint": "^7.27.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "mocha": "^8.4.0",
     "nyc": "^15.1.0",
+    "prettier": "^2.3.0",
     "sinon": "^11.1.1",
     "sinon-chai": "^3.7.0",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.2"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module"
+    },
+    "extends": [
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {}
+  },
+  "prettier": {
+    "semi": true,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "printWidth": 120,
+    "tabWidth": 2
   }
 }

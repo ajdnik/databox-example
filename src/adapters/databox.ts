@@ -34,6 +34,6 @@ export class DataboxAdapter implements Interface.Service {
           metrics: res.metrics,
         });
       });
-    })
+    });
   }
 }

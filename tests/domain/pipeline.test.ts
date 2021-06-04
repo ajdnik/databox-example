@@ -9,8 +9,8 @@ use(chaiAsPromised);
 use(sinonChai);
 
 describe('ExecutePipeline', () => {
-  let container: Container = {} as Container;
-  let pipeline: Pipeline = {} as Pipeline;
+  const container: Container = {} as Container;
+  const pipeline: Pipeline = {} as Pipeline;
   beforeEach(() => {
     container.log = {
       info: stub(),
@@ -19,10 +19,10 @@ describe('ExecutePipeline', () => {
       debug: stub(),
     };
     pipeline.collector = {
-      collect: stub().resolves([])
+      collect: stub().resolves([]),
     };
     pipeline.databox = {
-      push: stub().resolves({ id: 'fake', metrics: [] })
+      push: stub().resolves({ id: 'fake', metrics: [] }),
     };
   });
 

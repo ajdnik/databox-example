@@ -9,7 +9,7 @@ use(chaiAsPromised);
 use(sinonChai);
 
 describe('GitHubMetrics', () => {
-  let container: Container = {} as Container;
+  const container: Container = {} as Container;
   let github: GitHubMetrics;
   beforeEach(() => {
     container.log = {
@@ -21,13 +21,13 @@ describe('GitHubMetrics', () => {
     container.config = {
       github: {
         username: 'fake-username',
-      }
+      },
     } as Configuration;
     container.github = {
       getRepositories: stub().resolves([]),
       getCodeFrequency: stub().resolves([]),
       getCommitActivity: stub().resolves([]),
-    }
+    };
     github = new GitHubMetrics(container);
   });
 
@@ -40,13 +40,15 @@ describe('GitHubMetrics', () => {
 
   it('should return a single metric when service returns nothing', async () => {
     const res = await github.collect();
-    expect(res).to.deep.eq([{
-      key: 'repositories',
-      value: 0,
-      attributes: {
-        owner: 'fake-username',
-      }
-    }]);
+    expect(res).to.deep.eq([
+      {
+        key: 'repositories',
+        value: 0,
+        attributes: {
+          owner: 'fake-username',
+        },
+      },
+    ]);
   });
 
   it('should return metrics when service returns data', async () => {
@@ -56,17 +58,15 @@ describe('GitHubMetrics', () => {
     (container.github.getCodeFrequency as any).resolves([
       { week: 13, additions: 17, deletions: -117, username: owner },
     ]);
-    (container.github.getCommitActivity as any).resolves([
-      { week: 13, total: 11, username: owner },
-    ]);
+    (container.github.getCommitActivity as any).resolves([{ week: 13, total: 11, username: owner }]);
 
     const res = await github.collect();
 
     expect(res).to.deep.eq([
-      { key: 'repositories', value: 1, attributes: { owner }},
-      { key: 'repository_additions', value: 17, date, attributes: { owner }},
-      { key: 'repository_deletions', value: -117, date, attributes: { owner }},
-      { key: 'repository_commits', value: 11, date, attributes: { owner }},
+      { key: 'repositories', value: 1, attributes: { owner } },
+      { key: 'repository_additions', value: 17, date, attributes: { owner } },
+      { key: 'repository_deletions', value: -117, date, attributes: { owner } },
+      { key: 'repository_commits', value: 11, date, attributes: { owner } },
     ]);
   });
 
@@ -110,37 +110,37 @@ describe('GitHubMetrics', () => {
     const res = await github.collect();
 
     expect(res).to.deep.eq([
-      { key: 'repositories', value: 1, attributes: { owner }},
-      { key: 'repository_additions', value: 0, date: date(292), attributes: { owner }},
-      { key: 'repository_deletions', value: 0, date: date(292), attributes: { owner }},
-      { key: 'repository_additions', value: 127, date: date(115), attributes: { owner }},
-      { key: 'repository_deletions', value: -1, date: date(115), attributes: { owner }},
-      { key: 'repository_additions', value: 113, date: date(111), attributes: { owner }},
-      { key: 'repository_deletions', value: 0, date: date(111), attributes: { owner }},
-      { key: 'repository_additions', value: 15, date: date(90), attributes: { owner }},
-      { key: 'repository_deletions', value: -1, date: date(90), attributes: { owner }},
-      { key: 'repository_additions', value: 17, date: date(25), attributes: { owner }},
-      { key: 'repository_deletions', value: -91, date: date(25), attributes: { owner }},
-      { key: 'repository_additions', value: 17, date: date(13), attributes: { owner }},
-      { key: 'repository_deletions', value: 0, date: date(13), attributes: { owner }},
-      { key: 'repository_additions', value: 179, date: date(12), attributes: { owner }},
-      { key: 'repository_deletions', value: -17, date: date(12), attributes: { owner }},
-      { key: 'repository_additions', value: 18, date: date(10), attributes: { owner }},
-      { key: 'repository_deletions', value: -117, date: date(10), attributes: { owner }},
-      { key: 'repository_additions', value: 0, date: date(9), attributes: { owner }},
-      { key: 'repository_deletions', value: -117, date: date(9), attributes: { owner }},
-      { key: 'repository_additions', value: 17, date: date(7), attributes: { owner }},
-      { key: 'repository_deletions', value: -13, date: date(7), attributes: { owner }},
-      { key: 'repository_commits', value: 13, date: date(292), attributes: { owner }},
-      { key: 'repository_commits', value: 0, date: date(213), attributes: { owner }},
-      { key: 'repository_commits', value: 0, date: date(143), attributes: { owner }},
-      { key: 'repository_commits', value: 1, date: date(130), attributes: { owner }},
-      { key: 'repository_commits', value: 13, date: date(113), attributes: { owner }},
-      { key: 'repository_commits', value: 18, date: date(19), attributes: { owner }},
-      { key: 'repository_commits', value: 0, date: date(17), attributes: { owner }},
-      { key: 'repository_commits', value: 11, date: date(13), attributes: { owner }},
-      { key: 'repository_commits', value: 0, date: date(12), attributes: { owner }},
-      { key: 'repository_commits', value: 112, date: date(11), attributes: { owner }},
+      { key: 'repositories', value: 1, attributes: { owner } },
+      { key: 'repository_additions', value: 0, date: date(292), attributes: { owner } },
+      { key: 'repository_deletions', value: 0, date: date(292), attributes: { owner } },
+      { key: 'repository_additions', value: 127, date: date(115), attributes: { owner } },
+      { key: 'repository_deletions', value: -1, date: date(115), attributes: { owner } },
+      { key: 'repository_additions', value: 113, date: date(111), attributes: { owner } },
+      { key: 'repository_deletions', value: 0, date: date(111), attributes: { owner } },
+      { key: 'repository_additions', value: 15, date: date(90), attributes: { owner } },
+      { key: 'repository_deletions', value: -1, date: date(90), attributes: { owner } },
+      { key: 'repository_additions', value: 17, date: date(25), attributes: { owner } },
+      { key: 'repository_deletions', value: -91, date: date(25), attributes: { owner } },
+      { key: 'repository_additions', value: 17, date: date(13), attributes: { owner } },
+      { key: 'repository_deletions', value: 0, date: date(13), attributes: { owner } },
+      { key: 'repository_additions', value: 179, date: date(12), attributes: { owner } },
+      { key: 'repository_deletions', value: -17, date: date(12), attributes: { owner } },
+      { key: 'repository_additions', value: 18, date: date(10), attributes: { owner } },
+      { key: 'repository_deletions', value: -117, date: date(10), attributes: { owner } },
+      { key: 'repository_additions', value: 0, date: date(9), attributes: { owner } },
+      { key: 'repository_deletions', value: -117, date: date(9), attributes: { owner } },
+      { key: 'repository_additions', value: 17, date: date(7), attributes: { owner } },
+      { key: 'repository_deletions', value: -13, date: date(7), attributes: { owner } },
+      { key: 'repository_commits', value: 13, date: date(292), attributes: { owner } },
+      { key: 'repository_commits', value: 0, date: date(213), attributes: { owner } },
+      { key: 'repository_commits', value: 0, date: date(143), attributes: { owner } },
+      { key: 'repository_commits', value: 1, date: date(130), attributes: { owner } },
+      { key: 'repository_commits', value: 13, date: date(113), attributes: { owner } },
+      { key: 'repository_commits', value: 18, date: date(19), attributes: { owner } },
+      { key: 'repository_commits', value: 0, date: date(17), attributes: { owner } },
+      { key: 'repository_commits', value: 11, date: date(13), attributes: { owner } },
+      { key: 'repository_commits', value: 0, date: date(12), attributes: { owner } },
+      { key: 'repository_commits', value: 112, date: date(11), attributes: { owner } },
     ]);
   });
 
@@ -186,26 +186,26 @@ describe('GitHubMetrics', () => {
     const res = await github.collect();
 
     expect(res).to.deep.eq([
-      { key: 'repositories', value: 3, attributes: { owner }},
-      { key: 'repository_additions', value: 191, date: date(113), attributes: { owner }},
-      { key: 'repository_deletions', value: -12, date: date(113), attributes: { owner }},
-      { key: 'repository_additions', value: 18, date: date(13), attributes: { owner }},
-      { key: 'repository_deletions', value: -124, date: date(13), attributes: { owner }},
-      { key: 'repository_additions', value: 189, date: date(3), attributes: { owner }},
-      { key: 'repository_deletions', value: -199, date: date(3), attributes: { owner }},
-      { key: 'repository_additions', value: 197, date: date(1), attributes: { owner }},
-      { key: 'repository_deletions', value: 0, date: date(1), attributes: { owner }},
-      { key: 'repository_commits', value: 189, date: date(142), attributes: { owner }},
-      { key: 'repository_commits', value: 0, date: date(13), attributes: { owner }},
-      { key: 'repository_commits', value: 319, date: date(1), attributes: { owner }},
-      { key: 'repository_additions', value: 514, date: date(7), attributes: { owner }},
-      { key: 'repository_deletions', value: 0, date: date(7), attributes: { owner }},
-      { key: 'repository_additions', value: 17, date: date(17), attributes: { owner }},
-      { key: 'repository_deletions', value: -93, date: date(17), attributes: { owner }},
-      { key: 'repository_additions', value: 719, date: date(12), attributes: { owner }},
-      { key: 'repository_deletions', value: -41, date: date(12), attributes: { owner }},
-      { key: 'repository_commits', value: 17, date: date(14), attributes: { owner }},
-      { key: 'repository_commits', value: 0, date: date(7), attributes: { owner }},
+      { key: 'repositories', value: 3, attributes: { owner } },
+      { key: 'repository_additions', value: 191, date: date(113), attributes: { owner } },
+      { key: 'repository_deletions', value: -12, date: date(113), attributes: { owner } },
+      { key: 'repository_additions', value: 18, date: date(13), attributes: { owner } },
+      { key: 'repository_deletions', value: -124, date: date(13), attributes: { owner } },
+      { key: 'repository_additions', value: 189, date: date(3), attributes: { owner } },
+      { key: 'repository_deletions', value: -199, date: date(3), attributes: { owner } },
+      { key: 'repository_additions', value: 197, date: date(1), attributes: { owner } },
+      { key: 'repository_deletions', value: 0, date: date(1), attributes: { owner } },
+      { key: 'repository_commits', value: 189, date: date(142), attributes: { owner } },
+      { key: 'repository_commits', value: 0, date: date(13), attributes: { owner } },
+      { key: 'repository_commits', value: 319, date: date(1), attributes: { owner } },
+      { key: 'repository_additions', value: 514, date: date(7), attributes: { owner } },
+      { key: 'repository_deletions', value: 0, date: date(7), attributes: { owner } },
+      { key: 'repository_additions', value: 17, date: date(17), attributes: { owner } },
+      { key: 'repository_deletions', value: -93, date: date(17), attributes: { owner } },
+      { key: 'repository_additions', value: 719, date: date(12), attributes: { owner } },
+      { key: 'repository_deletions', value: -41, date: date(12), attributes: { owner } },
+      { key: 'repository_commits', value: 17, date: date(14), attributes: { owner } },
+      { key: 'repository_commits', value: 0, date: date(7), attributes: { owner } },
     ]);
   });
 });

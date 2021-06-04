@@ -13,6 +13,6 @@ export class SetTimeout implements Timeout {
    * @public
    */
   async wait(ms: number): Promise<void> {
-    await new Promise(resolve => setTimeout(resolve, ms));
+    await new Promise((resolve) => setTimeout(resolve, ms));
   }
 }

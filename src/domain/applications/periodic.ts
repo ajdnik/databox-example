@@ -16,7 +16,9 @@ export class Periodic implements Application {
    */
   async execute(): Promise<void> {
     for (;;) {
-      const pipelineTasks = this.container.pipelines.map((pipeline: Pipeline) => this.container.executor(this.container, pipeline));
+      const pipelineTasks = this.container.pipelines.map((pipeline: Pipeline) =>
+        this.container.executor(this.container, pipeline),
+      );
       await Promise.all(pipelineTasks);
       await this.container.timeout.wait(this.timeoutMs);
     }

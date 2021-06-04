@@ -39,8 +39,8 @@ declare module 'instagram-web-api' {
       user: {
         edge_owner_to_timeline_media: {
           count: number;
-        }
-      }
+        };
+      };
     }
   }
   export = Instagram;

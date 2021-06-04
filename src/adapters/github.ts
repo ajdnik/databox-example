@@ -23,9 +23,12 @@ export class GitHubAdapter implements GitHub.Service {
    */
   async getRepositories(username: string): Promise<GitHub.Repository[]> {
     const res = await this.octokit.request('GET /users/{username}/repos', { username });
-    return res.data.map((itm: any) => ({
-      name: itm.name,
-    } as GitHub.Repository));
+    return res.data.map(
+      (itm: any) =>
+        ({
+          name: itm.name,
+        } as GitHub.Repository),
+    );
   }
 
   /**
@@ -38,17 +41,23 @@ export class GitHubAdapter implements GitHub.Service {
    * @public
    */
   async getCodeFrequency(username: string, repository: string): Promise<GitHub.CodeFrequency[]> {
-    const res = await this.octokit.request('GET /repos/{owner}/{repo}/stats/code_frequency', { owner: username, repo: repository });
+    const res = await this.octokit.request('GET /repos/{owner}/{repo}/stats/code_frequency', {
+      owner: username,
+      repo: repository,
+    });
     if (res.status !== 200) {
       return [];
     }
-    return res.data.map((itm: any) => ({
-      week: itm[0],
-      additions: itm[1],
-      deletions: itm[2],
-      repository,
-      username,
-    } as GitHub.CodeFrequency));
+    return res.data.map(
+      (itm: any) =>
+        ({
+          week: itm[0],
+          additions: itm[1],
+          deletions: itm[2],
+          repository,
+          username,
+        } as GitHub.CodeFrequency),
+    );
   }
 
   /**
@@ -61,16 +70,22 @@ export class GitHubAdapter implements GitHub.Service {
    * @public
    */
   async getCommitActivity(username: string, repository: string): Promise<GitHub.CommitActivity[]> {
-    const res = await this.octokit.request('GET /repos/{owner}/{repo}/stats/commit_activity', { owner: username, repo: repository });
+    const res = await this.octokit.request('GET /repos/{owner}/{repo}/stats/commit_activity', {
+      owner: username,
+      repo: repository,
+    });
     if (res.status !== 200) {
       return [];
     }
-    return res.data.map((itm: any) => ({
-      week: itm.week,
-      days: itm.days,
-      total: itm.total,
-      repository,
-      username,
-    } as GitHub.CommitActivity));
+    return res.data.map(
+      (itm: any) =>
+        ({
+          week: itm.week,
+          days: itm.days,
+          total: itm.total,
+          repository,
+          username,
+        } as GitHub.CommitActivity),
+    );
   }
 }

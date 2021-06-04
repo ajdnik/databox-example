@@ -9,7 +9,7 @@ use(chaiAsPromised);
 use(sinonChai);
 
 describe('InstagramMetrics', () => {
-  let container: Container = {} as Container;
+  const container: Container = {} as Container;
   let instagram: InstagramMetrics;
   beforeEach(() => {
     container.log = {
@@ -21,7 +21,7 @@ describe('InstagramMetrics', () => {
     container.config = {
       instagram: {
         username: 'fake-username',
-      }
+      },
     } as Configuration;
     container.instagram = {
       getFollowers: stub().resolves(0),
@@ -36,10 +36,10 @@ describe('InstagramMetrics', () => {
     const res = await instagram.collect();
 
     expect(res).to.deep.eq([
-      { key: 'total_followers', value: 0, attributes: { username }},
-      { key: 'total_following', value: 0, attributes: { username }},
-      { key: 'total_pictures', value: 0, attributes: { username }},
-    ]); 
+      { key: 'total_followers', value: 0, attributes: { username } },
+      { key: 'total_following', value: 0, attributes: { username } },
+      { key: 'total_pictures', value: 0, attributes: { username } },
+    ]);
   });
 
   it('should return metrics on success #2', async () => {
@@ -51,10 +51,10 @@ describe('InstagramMetrics', () => {
     const res = await instagram.collect();
 
     expect(res).to.deep.eq([
-      { key: 'total_followers', value: 176, attributes: { username }},
-      { key: 'total_following', value: 415, attributes: { username }},
-      { key: 'total_pictures', value: 17, attributes: { username }},
-    ]); 
+      { key: 'total_followers', value: 176, attributes: { username } },
+      { key: 'total_following', value: 415, attributes: { username } },
+      { key: 'total_pictures', value: 17, attributes: { username } },
+    ]);
   });
 
   it('should throw error if instagram service call fails', async () => {

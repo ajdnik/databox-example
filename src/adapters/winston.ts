@@ -9,20 +9,18 @@ import * as winston from 'winston';
 export class WinstonAdapter implements Logger {
   private logger: winston.Logger;
   constructor(env: string, service: string, filename: string) {
-    const context = winston.format(info => {
+    const context = winston.format((info) => {
       info.service = service;
       return info;
     });
 
-    const transports: winston.transport[] = [
-      new winston.transports.Console(),
-    ];
+    const transports: winston.transport[] = [new winston.transports.Console()];
     if (env !== 'development') {
       transports.push(new winston.transports.File({ filename }));
     }
 
     this.logger = winston.createLogger({
-      level: env === 'development' ? 'debug': 'info',
+      level: env === 'development' ? 'debug' : 'info',
       format: winston.format.combine(winston.format.timestamp(), context(), winston.format.json()),
       transports,
     });

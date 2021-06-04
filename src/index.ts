@@ -28,21 +28,21 @@ container.pipelines = [
   {
     collector: new InstagramMetrics(container),
     databox: new DataboxAdapter(config.instagram.databox),
-  }
+  },
 ];
 
 // Define process handlers
-process.on('SIGTERM', signal => {
+process.on('SIGTERM', (signal) => {
   container.log.info(`Process ${process.pid} received a SIGTERM signal`);
   process.exit(0);
 });
 
-process.on('SIGINT', signal => {
+process.on('SIGINT', (signal) => {
   container.log.info(`Process ${process.pid} has been interrupted`);
   process.exit(0);
 });
 
-process.on('uncaughtException', err => {
+process.on('uncaughtException', (err) => {
   container.log.error('Uncaught exception, exiting process', { error: err.message, stack: err.stack });
   process.exit(1);
 });

@@ -1,7 +1,7 @@
 import { Configuration } from './interfaces';
 
 /**
- * Return an environment variable, if it is 
+ * Return an environment variable, if it is
  * undefined throw and error.
  *
  * @param name - ENV variable name.
@@ -57,7 +57,7 @@ export function ParseEnvConfig(): Configuration {
       username: requiredString('INSTAGRAM_USERNAME'),
       password: requiredString('INSTAGRAM_PASSWORD'),
       databox: requiredString('INSTAGRAM_DATABOX_TOKEN'),
-    }
+    },
   };
   return config;
 }

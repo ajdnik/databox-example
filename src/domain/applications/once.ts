@@ -14,7 +14,9 @@ export class Once implements Application {
    * @public
    */
   async execute(): Promise<void> {
-    const pipelineTasks = this.container.pipelines.map((pipeline: Pipeline) => this.container.executor(this.container, pipeline));
+    const pipelineTasks = this.container.pipelines.map((pipeline: Pipeline) =>
+      this.container.executor(this.container, pipeline),
+    );
     await Promise.all(pipelineTasks);
   }
 }

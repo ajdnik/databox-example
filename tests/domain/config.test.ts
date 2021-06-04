@@ -7,14 +7,14 @@ describe('ParseEnvConfig', () => {
   });
 
   it('should throw not a number when TIMEOUT is a word', () => {
-    const oldEnv = {...process.env};
+    const oldEnv = { ...process.env };
     process.env.TIMEOUT = 'hello-world';
     expect(() => ParseEnvConfig()).to.throw('Env variable TIMEOUT is not a number.');
     process.env = oldEnv;
   });
 
   it('should return config when ENV variables are defined', () => {
-    const oldEnv = {...process.env};
+    const oldEnv = { ...process.env };
     process.env.GITHUB_USERNAME = 'ghuser';
     process.env.GITHUB_TOKEN = 'ghtoken';
     process.env.GITHUB_DATABOX_TOKEN = 'gh_databox';
@@ -38,13 +38,13 @@ describe('ParseEnvConfig', () => {
         username: 'iguser',
         password: 'igpass',
         databox: 'ig_databox',
-      }
+      },
     });
     process.env = oldEnv;
   });
 
   it('should override default when ENV variables are defined', () => {
-    const oldEnv = {...process.env};
+    const oldEnv = { ...process.env };
     process.env.GITHUB_USERNAME = 'ghuser';
     process.env.GITHUB_TOKEN = 'ghtoken';
     process.env.GITHUB_DATABOX_TOKEN = 'gh_databox';
@@ -71,7 +71,7 @@ describe('ParseEnvConfig', () => {
         username: 'iguser',
         password: 'igpass',
         databox: 'ig_databox',
-      }
+      },
     });
     process.env = oldEnv;
   });

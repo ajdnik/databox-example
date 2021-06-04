@@ -15,7 +15,7 @@ interface TaskResult {
  * @class
  */
 export class InstagramMetrics implements Collector {
-  constructor (private container: Container) {}
+  constructor(private container: Container) {}
 
   /**
    * A conveniance function which converts async results into
@@ -43,17 +43,20 @@ export class InstagramMetrics implements Collector {
     const statsTasks = [
       this.createTask('total_followers', this.container.instagram.getFollowers(username)),
       this.createTask('total_following', this.container.instagram.getFollowings(username)),
-      this.createTask('total_pictures', this.container.instagram.getPhotos(username))
+      this.createTask('total_pictures', this.container.instagram.getPhotos(username)),
     ];
 
     const results = await Promise.all(statsTasks);
-    const metrics = results.map(({ key, value }: TaskResult) => ({
-      key,
-      value,
-      attributes: {
-        username,
-      }
-    } as Databox.Metric));
+    const metrics = results.map(
+      ({ key, value }: TaskResult) =>
+        ({
+          key,
+          value,
+          attributes: {
+            username,
+          },
+        } as Databox.Metric),
+    );
     this.container.log.debug('Collected metrics from Instagram service', { metricCount: metrics.length });
     return metrics;
   }
