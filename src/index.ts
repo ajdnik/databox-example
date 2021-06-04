@@ -10,6 +10,8 @@ import { ParseEnvConfig } from './domain/config';
 import { WinstonAdapter } from './adapters/winston';
 import { ExecutePipeline } from './domain/pipeline';
 import { EnvAdapter } from './adapters/env';
+import { BitbucketAdapter } from './adapters/bitbucket';
+import { BitbucketMetrics } from './domain/collectors/bitbucket'
 
 // Load configuration
 const env = new EnvAdapter();
@@ -22,6 +24,7 @@ container.config = config;
 container.timeout = new SetTimeout();
 container.github = new GitHubAdapter(config.github.token);
 container.instagram = new InstagramAdapter(config.instagram.username, config.instagram.password);
+container.bitbucket = new BitbucketAdapter(config.bitbucket.username, config.bitbucket.password);
 container.log = new WinstonAdapter(config.environment, config.service, config.log.filename);
 container.executor = ExecutePipeline;
 container.pipelines = [
@@ -33,6 +36,10 @@ container.pipelines = [
     collector: new InstagramMetrics(container),
     databox: new DataboxAdapter(config.instagram.databox),
   },
+  {
+    collector: new BitbucketMetrics(container),
+    databox: new DataboxAdapter(config.bitbucket.databox),
+  }
 ];
 
 // Define process handlers

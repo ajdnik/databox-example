@@ -7,7 +7,7 @@ import { Octokit } from '@octokit/rest';
  * @class
  */
 export class GitHubAdapter implements GitHub.Service {
-  private octokit: any;
+  private octokit: Octokit;
 
   constructor(accessToken: string) {
     this.octokit = new Octokit({ auth: accessToken });

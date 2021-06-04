@@ -21,6 +21,9 @@ describe('ParseEnvConfig', () => {
     process.env.INSTAGRAM_USERNAME = 'iguser';
     process.env.INSTAGRAM_PASSWORD = 'igpass';
     process.env.INSTAGRAM_DATABOX_TOKEN = 'ig_databox';
+    process.env.BITBUCKET_USERNAME = 'bituser';
+    process.env.BITBUCKET_PASSWORD = 'bitpass';
+    process.env.BITBUCKET_DATABOX_TOKEN = 'bit_databox';
     const res = ParseEnvConfig();
     expect(res).to.deep.eq({
       timeout: undefined,
@@ -39,6 +42,11 @@ describe('ParseEnvConfig', () => {
         password: 'igpass',
         databox: 'ig_databox',
       },
+      bitbucket: {
+        username: 'bituser',
+        password: 'bitpass',
+        databox: 'bit_databox',
+      },
     });
     process.env = oldEnv;
   });
@@ -51,6 +59,9 @@ describe('ParseEnvConfig', () => {
     process.env.INSTAGRAM_USERNAME = 'iguser';
     process.env.INSTAGRAM_PASSWORD = 'igpass';
     process.env.INSTAGRAM_DATABOX_TOKEN = 'ig_databox';
+    process.env.BITBUCKET_USERNAME = 'bituser';
+    process.env.BITBUCKET_PASSWORD = 'bitpass';
+    process.env.BITBUCKET_DATABOX_TOKEN = 'bit_databox';
     process.env.NODE_ENV = 'fake_env';
     process.env.SERVICE = 'fake_service';
     process.env.LOG_FILENAME = '/example/path/to/log/file.log';
@@ -71,6 +82,11 @@ describe('ParseEnvConfig', () => {
         username: 'iguser',
         password: 'igpass',
         databox: 'ig_databox',
+      },
+      bitbucket: {
+        username: 'bituser',
+        password: 'bitpass',
+        databox: 'bit_databox',
       },
     });
     process.env = oldEnv;

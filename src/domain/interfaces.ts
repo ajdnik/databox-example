@@ -59,6 +59,18 @@ export namespace Databox {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace Bitbucket {
+  export interface Repository {
+    name: string;
+    language: string;
+  }
+
+  export interface Service {
+    getRepositories(): Promise<Repository[]>;
+  }
+}
+
 export interface Collector {
   collect(): Promise<Databox.Metric[]>;
 }
@@ -100,11 +112,17 @@ export interface Configuration {
     password: string;
     databox: string;
   };
+  bitbucket: {
+    username: string;
+    password: string;
+    databox: string;
+  };
 }
 
 export interface Container {
   github: GitHub.Service;
   instagram: Instagram.Service;
+  bitbucket: Bitbucket.Service;
   config: Configuration;
   pipelines: Pipeline[];
   executor: PipelineExecutor;

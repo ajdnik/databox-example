@@ -58,6 +58,11 @@ export function ParseEnvConfig(): Configuration {
       password: requiredString('INSTAGRAM_PASSWORD'),
       databox: requiredString('INSTAGRAM_DATABOX_TOKEN'),
     },
+    bitbucket: {
+      username: requiredString('BITBUCKET_USERNAME'),
+      password: requiredString('BITBUCKET_PASSWORD'),
+      databox: requiredString('BITBUCKET_DATABOX_TOKEN'),
+    },
   };
   return config;
 }

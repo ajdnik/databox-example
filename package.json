@@ -25,6 +25,7 @@
   "homepage": "https://github.com/ajdnik/databox-example#readme",
   "dependencies": {
     "@octokit/rest": "^18.5.6",
+    "bitbucketjs": "^1.0.2",
     "databox": "^2.0.1",
     "dotenv": "^10.0.0",
     "instagram-web-api": "^2.2.2",
