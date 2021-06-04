@@ -1,5 +1,5 @@
 import { AppFactory } from './domain/factories';
-import { Container, Configuration } from './domain/interfaces';
+import { Container } from './domain/interfaces';
 import { SetTimeout } from './adapters/timeout';
 import { GitHubMetrics } from './domain/collectors/github';
 import { InstagramMetrics } from './domain/collectors/instagram';
@@ -9,7 +9,11 @@ import { InstagramAdapter } from './adapters/instagram';
 import { ParseEnvConfig } from './domain/config';
 import { WinstonAdapter } from './adapters/winston';
 import { ExecutePipeline } from './domain/pipeline';
+import { EnvAdapter } from './adapters/env';
 
+// Load configuration
+const env = new EnvAdapter();
+env.load();
 const config = ParseEnvConfig();
 
 // Build a dependency injection container
@@ -32,12 +36,12 @@ container.pipelines = [
 ];
 
 // Define process handlers
-process.on('SIGTERM', (signal) => {
+process.on('SIGTERM', () => {
   container.log.info(`Process ${process.pid} received a SIGTERM signal`);
   process.exit(0);
 });
 
-process.on('SIGINT', (signal) => {
+process.on('SIGINT', () => {
   container.log.info(`Process ${process.pid} has been interrupted`);
   process.exit(0);
 });
